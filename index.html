@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Catch the Falling Items game - Test your reflexes!" />
+  <title>Catch the Falling Items</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="start-screen" id="startScreen">
+    <h1>Catch the Falling Items</h1>
+    <p>Use the buttons below or swipe left/right to move the paddle</p>
+    <p>Collect as many items as you can!</p>
+    <button id="startBtn">Start Game</button>
+  </div>
+
+  <div class="game" id="gameScreen">
+    <div class="score" id="score">Score: 0</div>
+    <div class="player" id="player"></div>
+    <div class="item" id="item"></div>
+    <div class="game-over" id="gameOver">
+      <h2>Ubill...!Game Over</h2>
+      <p>Your score: <span id="finalScore">0</span></p>
+      <button id="restartBtn">Play Again</button>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="leftBtn">←</button>
+    <button id="rightBtn">→</button>
+  </div>
+
+  <audio id="catchSound" src="sounds/catch.mp3" preload="auto"></audio>
+  <audio id="gameOverSound" src="sounds/gameover.mp3" preload="auto"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
