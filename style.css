@@ -2,14 +2,64 @@ body {
   margin: 0;
   background: #111;
   font-family: sans-serif;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.start-screen {
+  height: 100vh;
+  width: 100vw;
+  background: #222;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.start-screen h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.start-screen p {
+  font-size: 1.25rem;
+  margin-bottom: 30px;
+}
+
+.start-screen button {
+  padding: 15px 40px;
+  font-size: 1.25rem;
+  background: #00ffcc;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #000;
+  box-shadow: 0 0 10px #00ffcc;
+  user-select: none;
 }
 
 .game {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
-  position: relative;
-  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 100vw; /* hidden off screen right */
   background: #222;
+  overflow: hidden;
+  transition: left 0.5s ease;
+  z-index: 10;
+}
+
+.game.active {
+  left: 0;
 }
 
 .score {
@@ -18,7 +68,7 @@ body {
   position: absolute;
   top: 10px;
   left: 10px;
-  z-index: 10;
+  z-index: 20;
   text-shadow: 1px 1px 3px #000;
 }
 
@@ -32,7 +82,7 @@ body {
   transform: translateX(-50%);
   border-radius: 10px;
   box-shadow: 0 0 10px #00ffcc;
-  transition: left 0.2s ease;
+  transition: left 0.1s ease;
   max-width: 100vw;
 }
 
@@ -63,7 +113,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  z-index: 20;
+  z-index: 50;
   display: flex;
 }
 
@@ -85,11 +135,13 @@ body {
 .controls {
   position: fixed;
   bottom: 20px;
-  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
   gap: 40px;
-  z-index: 30;
+  z-index: 1000;
+  user-select: none;
 }
 
 .controls button {
@@ -103,6 +155,5 @@ body {
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 0 10px #00ffcc;
-  user-select: none;
   touch-action: manipulation;
 }
