@@ -4,17 +4,21 @@ const scoreDisplay = document.getElementById('score');
 const gameOverScreen = document.getElementById('gameOver');
 const leftBtn = document.getElementById('leftBtn');
 const rightBtn = document.getElementById('rightBtn');
+const startScreen = document.getElementById('startScreen');
+const gameScreen = document.getElementById('gameScreen');
+const startBtn = document.getElementById('startBtn');
+const restartBtn = document.getElementById('restartBtn');
 
 const catchSound = new Audio('catch.mp3');
 const gameOverSound = new Audio('gameover.mp3');
 
-let playerX = window.innerWidth / 2 - 40; // center player horizontally
+let playerX = window.innerWidth / 2 - 40;
 let itemX = Math.random() * (window.innerWidth - 30);
 let itemY = 0;
 
 let score = 0;
 let speed = 4;
-let gameRunning = true;
+let gameRunning = false;
 
 function movePlayerLeft() {
   if (!gameRunning) return;
@@ -28,18 +32,15 @@ function movePlayerRight() {
   player.style.left = `${playerX}px`;
 }
 
-document.addEventListener('keydown', (e) => {
+document.addEventListener('keydown', e => {
   if (!gameRunning) return;
-  if (e.key === 'ArrowLeft') {
-    movePlayerLeft();
-  } else if (e.key === 'ArrowRight') {
-    movePlayerRight();
-  }
+  if (e.key === 'ArrowLeft') movePlayerLeft();
+  if (e.key === 'ArrowRight') movePlayerRight();
 });
 
 let leftInterval, rightInterval;
 
-leftBtn.addEventListener('touchstart', (e) => {
+leftBtn.addEventListener('touchstart', e => {
   e.preventDefault();
   movePlayerLeft();
   leftInterval = setInterval(movePlayerLeft, 150);
@@ -47,8 +48,16 @@ leftBtn.addEventListener('touchstart', (e) => {
 leftBtn.addEventListener('touchend', () => {
   clearInterval(leftInterval);
 });
+leftBtn.addEventListener('mousedown', e => {
+  e.preventDefault();
+  movePlayerLeft();
+  leftInterval = setInterval(movePlayerLeft, 150);
+});
+leftBtn.addEventListener('mouseup', () => {
+  clearInterval(leftInterval);
+});
 
-rightBtn.addEventListener('touchstart', (e) => {
+rightBtn.addEventListener('touchstart', e => {
   e.preventDefault();
   movePlayerRight();
   rightInterval = setInterval(movePlayerRight, 150);
@@ -56,26 +65,33 @@ rightBtn.addEventListener('touchstart', (e) => {
 rightBtn.addEventListener('touchend', () => {
   clearInterval(rightInterval);
 });
+rightBtn.addEventListener('mousedown', e => {
+  e.preventDefault();
+  movePlayerRight();
+  rightInterval = setInterval(movePlayerRight, 150);
+});
+rightBtn.addEventListener('mouseup', () => {
+  clearInterval(rightInterval);
+});
 
-// Swipe control logic
+// Swipe controls
 let touchStartX = null;
 
-window.addEventListener('touchstart', (e) => {
+window.addEventListener('touchstart', e => {
   if (!gameRunning) return;
   touchStartX = e.changedTouches[0].clientX;
 });
 
-window.addEventListener('touchmove', (e) => {
+window.addEventListener('touchmove', e => {
   if (!gameRunning || touchStartX === null) return;
 
   const touchCurrentX = e.changedTouches[0].clientX;
   const diffX = touchCurrentX - touchStartX;
-
-  const swipeThreshold = 20; // minimum distance to consider swipe
+  const swipeThreshold = 20;
 
   if (diffX > swipeThreshold) {
     movePlayerRight();
-    touchStartX = touchCurrentX; // reset for continuous swipes
+    touchStartX = touchCurrentX;
   } else if (diffX < -swipeThreshold) {
     movePlayerLeft();
     touchStartX = touchCurrentX;
@@ -110,6 +126,7 @@ function dropItem() {
 
   if (itemY > window.innerHeight) {
     gameOver();
+    return;
   }
 
   requestAnimationFrame(dropItem);
@@ -133,9 +150,33 @@ function restartGame() {
   playerX = window.innerWidth / 2 - 40;
   scoreDisplay.textContent = `Score: 0`;
   player.style.left = `${playerX}px`;
-  gameRunning = true;
   gameOverScreen.style.display = 'none';
+  gameRunning = true;
   dropItem();
 }
 
-dropItem();
+// Start game handler
+startBtn.addEventListener('click', () => {
+  startScreen.style.display = 'none';
+  gameScreen.classList.add('active');
+  gameRunning = true;
+
+  // Reset initial values
+  score = 0;
+  speed = 4;
+  itemY = 0;
+  playerX = window.innerWidth / 2 - 40;
+  scoreDisplay.textContent = `Score: 0`;
+  player.style.left = `${playerX}px`;
+  gameOverScreen.style.display = 'none';
+
+  dropItem();
+});
+
+restartBtn.addEventListener('click', restartGame);
+
+// On window resize, reposition player within boundaries
+window.addEventListener('resize', () => {
+  playerX = Math.min(playerX, window.innerWidth - player.offsetWidth);
+  player.style.left = `${playerX}px`;
+});
