@@ -1,16 +1,29 @@
+/* === Customize the background image here === */
 body {
   margin: 0;
-  background: #111;
   font-family: sans-serif;
-  overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  user-select: none;
+
+  /* Background image - replace URL with your own image */
+  background-image: url('my-background.jpg');
+
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: white;
 }
 
+/* Start Screen */
 .start-screen {
-  height: 100vh;
-  width: 100vw;
-  background: #222;
-  color: white;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -18,9 +31,6 @@ body {
   text-align: center;
   padding: 20px;
   box-sizing: border-box;
-  position: fixed;
-  top: 0;
-  left: 0;
   z-index: 100;
 }
 
@@ -43,35 +53,29 @@ body {
   cursor: pointer;
   color: #000;
   box-shadow: 0 0 10px #00ffcc;
-  user-select: none;
 }
 
+/* Game area (2/3 screen height) */
 .game {
   width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 100vw; /* hidden off screen right */
-  background: #222;
+  height: 66.66vh;
+  position: relative;
+  background: rgba(34, 34, 34, 0.85);
   overflow: hidden;
-  transition: left 0.5s ease;
-  z-index: 10;
+  box-shadow: inset 0 0 100px #000000aa;
 }
 
-.game.active {
-  left: 0;
-}
-
+/* Score */
 .score {
-  color: white;
-  font-size: 24px;
   position: absolute;
   top: 10px;
   left: 10px;
+  font-size: 24px;
   z-index: 20;
   text-shadow: 1px 1px 3px #000;
 }
 
+/* Player bar */
 .player {
   width: 80px;
   height: 20px;
@@ -82,29 +86,31 @@ body {
   transform: translateX(-50%);
   border-radius: 10px;
   box-shadow: 0 0 10px #00ffcc;
-  transition: left 0.1s ease;
-  max-width: 100vw;
+  transition: left 0.05s ease;
 }
 
+/* Falling item with your own image */
 .item {
-  width: 30px;
-  height: 30px;
-  background: #ff0066;
+  width: 40px; /* adjust size to your image */
+  height: 40px;
+  background-image: url('falling-item.png'); /* replace with your image file */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  border-radius: 50%;
-  box-shadow: 0 0 8px #ff0066;
 }
 
+/* Game over screen overlay */
 .game-over {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
+  position: absolute;
+  width: 100%;
+  height: 100%;
   top: 0;
   left: 0;
-  background: #000000cc;
+  background: rgba(0, 0, 0, 0.85);
   padding: 30px;
   color: white;
   text-align: center;
@@ -132,15 +138,15 @@ body {
   cursor: pointer;
 }
 
+/* Controls below game screen (1/3 height) */
 .controls {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  width: 100vw;
+  height: calc(100vh - 66.66vh);
   display: flex;
   justify-content: center;
-  gap: 40px;
-  z-index: 1000;
+  align-items: center;
+  gap: 60px;
+  background: rgba(0, 0, 0, 0.85);
   user-select: none;
 }
 
@@ -148,12 +154,13 @@ body {
   background: #00ffcc;
   border: none;
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  font-size: 30px;
+  width: 70px;
+  height: 70px;
+  font-size: 36px;
   color: #000;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 0 10px #00ffcc;
+  box-shadow: 0 0 15px #00ffcc;
   touch-action: manipulation;
+  user-select: none;
 }
