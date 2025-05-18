@@ -2,25 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Catch the Falling Item</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="game">
+
+  <!-- Start Screen -->
+  <div class="start-screen" id="startScreen">
+    <h1>Catch the Falling Item</h1>
+    <p>Use buttons below or swipe to move the player.</p>
+    <button id="startBtn">Start Game</button>
+  </div>
+
+  <!-- Game Screen -->
+  <div class="game" id="gameScreen">
     <div class="score" id="score">Score: 0</div>
     <div class="player" id="player"></div>
     <div class="item" id="item"></div>
-
-    <div class="controls">
-      <button id="leftBtn" aria-label="Move Left">←</button>
-      <button id="rightBtn" aria-label="Move Right">→</button>
-    </div>
-
     <div class="game-over" id="gameOver">
-      <h1>Ubilll..!Game Over</h1>
-      <button onclick="restartGame()">Restart</button>
+      <h1>Ubill..!Game Over</h1>
+      <button id="restartBtn">Restart</button>
     </div>
+  </div>
+
+  <!-- Controls fixed bottom center -->
+  <div class="controls">
+    <button id="leftBtn" aria-label="Move Left">←</button>
+    <button id="rightBtn" aria-label="Move Right">→</button>
   </div>
 
   <script src="script.js"></script>
